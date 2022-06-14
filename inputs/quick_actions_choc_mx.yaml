@@ -1,0 +1,209 @@
+units:
+  kx: U
+  ky: U
+  rotary_y: cy+3
+  rotary_diode_x: -kx/2
+  rotary_diode_y: cy+2
+  sw_y: cy+16
+points:
+  key:
+    padding: ky
+    footprints:
+      choc:
+        type: choc
+        anchor:
+        nets:
+          from: =colrow
+          to: =column_net
+        params:
+          keycaps: true
+      mx:
+        type: mx
+        anchor:
+          rotate: 180
+        nets:
+          from: =colrow
+          to: =column_net
+        params:
+            keycaps: true
+      diode:
+        type: diode
+        nets:
+          from: =colrow
+          to: =row_net
+        anchor:
+          shift: [-6, -4.5]
+          rotate: 90
+        params:
+          front: false
+          tht: false
+  zones:
+    board:
+      rows:
+        bottom:
+          row_net: P21
+        home:
+          row_net: P20
+        top:
+          row_net: P19
+      columns:
+        pinkie:
+          spread: kx
+          key: 
+            column_net: P3
+        ring:
+          spread: kx
+          key: 
+            column_net: P4
+        middle: 
+          spread: kx
+          key: 
+            column_net: P5
+        index: 
+          spread: kx
+          key: 
+            column_net: P6
+        far: 
+          spread: kx
+          key: 
+            column_net: P7
+outlines:
+  exports:
+    raw: 
+      - type: keys
+        side: left
+        size: [1kx , 1kx]
+      - type: rectangle
+        size: [5kx, 22+kx/2]
+        anchor:
+          ref: board_pinkie_top
+          shift: [-kx/2, 0]
+      - type: rectangle
+        size: [2kx+5, 26.5+kx/2]
+        anchor:
+          ref: board_pinkie_top
+          shift: [-kx/2, 0]
+    cutouta:
+      - type: outline
+        name: raw
+        fillet: 3
+    cutoutb:
+      - type: outline
+        name: cutouta
+        fillet: 1
+    cutout:
+      - type: outline
+        name: cutoutb
+        fillet: 0.5
+    keycap_outlines:
+      - type: keys
+        side: left
+        size: [1kx - 0.5, 1ky - 0.5] # Choc keycaps are 17.5 x 16.5
+        bound: false               
+pcbs:
+  quick_actions_mx:
+    outlines:
+      main:
+        outline: cutoutb
+    footprints:
+      promicro:
+        type: promicro
+        anchor:
+          ref: board_pinkie_top
+          shift: [kx/2, cy+3]
+        params:
+          orientation: up
+      pcm12:
+        type: pcm12
+        anchor:
+          ref: board_pinkie_top
+          shift: [0, sw_y]
+          rotate: 180
+        nets:
+          from: pos  
+          to: RAW
+        params:
+          reverse: true 
+      b3u1000p:
+        type: b3u1000p
+        nets:
+          r1: RST  
+          r2: GND
+        anchor:
+          ref: board_ring_top
+          shift: [-kx/2+2, sw_y-1]
+          rotate: 0
+      bat:
+        type: bat
+        nets: 
+          neg: GND
+        anchor:
+          ref: board_ring_top
+          shift: [0, sw_y]
+          # rotate: -90
+
+      rotary1:
+        type: rotary
+        anchor:
+          ref: board_middle_top
+          shift: [0, rotary_y]
+          rotate: -90
+        nets:
+          from: P5
+          to: rotary1_diode
+          A: P16
+          B: P10
+          C: GND
+      rotary1_diode:
+        type: diode
+        nets:
+          from: rotary1_diode
+          to: P18
+        anchor:
+          ref: board_middle_top
+          shift: [rotary_diode_x, rotary_diode_y]
+          rotate: -90
+
+      rotary2:
+        type: rotary
+        anchor:
+          ref: board_index_top
+          shift: [0, rotary_y]
+          rotate: -90
+        nets:
+          from: P6
+          to: rotary2_diode
+          A: P15
+          B: P14
+          C: GND
+      rotary2_diode:
+        type: diode
+        nets:
+          from: rotary2_diode
+          to: P18
+        anchor:
+          ref: board_index_top
+          shift: [rotary_diode_x, rotary_diode_y]
+          rotate: -90
+
+      rotary3:
+        type: rotary
+        anchor:
+          ref: board_far_top
+          shift: [0, rotary_y]
+          rotate: -90
+        nets:
+          from: P7
+          to: rotary3_diode
+          A: P9
+          B: P8
+          C: GND
+      rotary3_diode:
+        type: diode
+        nets:
+          from: rotary3_diode
+          to: P18
+        anchor:
+          ref: board_far_top
+          shift: [rotary_diode_x, rotary_diode_y]
+          rotate: -90
