@@ -1,0 +1,13 @@
+# docker-compose
+version: '3'
+services:
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    command: sh -c "tail -F will-never-exist"
+    volumes:
+      - ./:/home/app
+      - node_modules:/home/app/node_modules
+volumes:
+  node_modules:
