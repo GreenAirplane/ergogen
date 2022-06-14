@@ -1,3 +1,24 @@
+# Quick Actions keyboard
+
+## Specs
+- 3x EC11 rotary encoders
+- 15 keys (+3 from rotary encoders)
+- Power switch for battery
+- Reset button
+- JST battery connector
+
+## Configs
+- `inputs/quick_actions_choc.yaml` - main config for Kailh Choc
+
+## Build Instructions
+1. `docker-compose up --build -d`
+2. `node src/cli.js inputs/quick_actions_choc.yaml` or `node src/cli.js inputs/quick_actions_choc_mx.yaml`
+
+PCB output is in `output/pcbs`
+
+---
+
+
 # Ergogen
 
 Ergogen is a keyboard generator that aims to provide a common configuration format to describe **ergonomic** 2D layouts, and generate automatic plates, cases, and (un-routed) PCBs for them.
